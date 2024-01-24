@@ -1,0 +1,20 @@
+{
+  "appFunctions": {
+    "getProductsByTier": {
+      "file": "getProductsByTier.js",
+      "secrets": []
+    },
+    "createBundle": {
+      "file": "createBundle.js",
+      "secrets": []
+    },
+    "getIsPortalConfigured": {
+      "file": "getIsPortalConfigured.js",
+      "secrets": []
+    },
+    "setupPortal": {
+      "file": "setupPortal.js",
+      "secrets": []
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "hubspot-example-cpq",
+  "version": "0.1.0",
+  "description": "This is an example of potential CPQ logic available in HubSpot through UI Extensions.",
+  "scripts": {
+    "postinstall": "cd ./src/app/extensions/ && npm install && cd ../app.functions && npm install",
+    "build": "npm run build --prefix ./src/app/extensions/"
+  },
+  "author": "Steve Miller",
+  "license": "MIT",
+  "dependencies": {
+    "@hubspot/ui-extensions": "^0.8.6"
+  }
+}

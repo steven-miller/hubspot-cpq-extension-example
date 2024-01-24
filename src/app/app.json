@@ -1,0 +1,24 @@
+{
+  "name": "HubSpot Example CPQ",
+  "description": "This is an example of potential CPQ logic available in HubSpot through UI Extensions.",
+  "uid": "hubspot_exampe_cpq",
+  "scopes": [
+    "crm.objects.contacts.read",
+    "crm.objects.contacts.write",
+    "collector.graphql_query.execute",
+    "collector.graphql_schema.read",
+    "crm.objects.deals.read",
+    "crm.objects.deals.write",
+    "e-commerce"
+  ],
+  "public": false,
+  "extensions": {
+    "crm": {
+      "cards": [
+        {
+          "file": "extensions/hubspot-cpq-example.json"
+        }
+      ]
+    }
+  }
+}

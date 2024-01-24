@@ -1,0 +1,10 @@
+{
+  "name": "hubspot-example-cpq",
+  "version": "0.1.0",
+  "author": "Steve Miller",
+  "license": "MIT",
+  "dependencies": {
+    "@hubspot/ui-extensions": "^0.8.6",
+    "react": "^18.2.0"
+  }
+}

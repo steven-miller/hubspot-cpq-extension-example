@@ -1,0 +1,12 @@
+{
+  "type": "crm-card",
+  "data": {
+    "title": "HubSpot CPQ Example",
+    "uid": "hubspot_cpq_example_card",
+    "location": "crm.record.tab",
+    "module": {
+      "file": "CPQ.jsx"
+    },
+    "objectTypes": [{ "name": "deals" }]
+  }
+}
