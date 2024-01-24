@@ -4,7 +4,7 @@
   "author": "Steve Miller",
   "license": "MIT",
   "dependencies": {
-    "@hubspot/api-client": "^9.1.1",
+    "@hubspot/api-client": "^10.2.0",
     "axios": "^0.27.2"
   }
 }

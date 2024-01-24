@@ -15,8 +15,6 @@ import {
   Text,
 } from "@hubspot/ui-extensions";
 
-const MINIMUM_PURCHASE_USD = 10000;
-
 const productItems = (response) => response.data.CRM.product_collection.items;
 
 const getStandardTierProducts = (response) =>
@@ -33,29 +31,31 @@ const formatter = new Intl.NumberFormat("en-US", {
   currency: "USD",
 });
 
-// Define the extension to be run within the Hubspot CRM
 hubspot.extend(({ context, actions }) => (
-  <Extension
+  <CPQ
     context={context}
     sendAlert={actions.addAlert}
     refreshObjectProperties={actions.refreshObjectProperties}
   />
 ));
 
-// Define the Extension component, taking in runServerless, context, & sendAlert as props
-const Extension = ({ context, sendAlert, refreshObjectProperties }) => {
+// todo: do I need context
+const CPQ = ({ context, sendAlert, refreshObjectProperties }) => {
   // ui management
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [tier, setTier] = useState("standard");
+  const [tier, setTier] = useState(null);
 
   // "tier" packages
-  // todo: move to `useReducer`
+  // todo: move to `useReducer`?
   const [standardTier, setStandardTier] = useState([]);
   const [enterpriseTier, setEnterpriseTier] = useState([]);
 
   const getProductsByTier = async () =>
     await hubspot.serverless("getProductsByTier");
+
+  const getIsPortalConfigured = async () =>
+    await hubspot.serverless("getIsPortalConfigured");
 
   const addLineItems = ({ products, total }) => {
     return hubspot.serverless("createBundle", {
@@ -73,8 +73,10 @@ const Extension = ({ context, sendAlert, refreshObjectProperties }) => {
     });
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     setLoading(true);
+    const config = await getIsPortalConfigured();
+    console.log(config);
     getProductsByTier().then((resp) => {
       setStandardTier(getStandardTierProducts(resp));
       setEnterpriseTier(getEnterpriseTierProducts(resp));
@@ -83,6 +85,7 @@ const Extension = ({ context, sendAlert, refreshObjectProperties }) => {
     });
   }, []); // todo: evaluate deps in hooks
 
+  // todo: probably a clever way to use one "total" rather than split logic everywhere
   const standardTotal = useMemo(() => {
     return standardTier.reduce(
       (total, product) =>
@@ -91,10 +94,6 @@ const Extension = ({ context, sendAlert, refreshObjectProperties }) => {
     );
   }, [standardTier]);
 
-  const standardShortfall = useMemo(() => {
-    return standardTotal - MINIMUM_PURCHASE_USD;
-  }, [standardTotal]);
-
   const enterpriseTotal = useMemo(() => {
     return enterpriseTier.reduce(
       (total, product) =>
@@ -102,10 +101,6 @@ const Extension = ({ context, sendAlert, refreshObjectProperties }) => {
       0
     );
   }, [enterpriseTier]);
-
-  const enterpriseShortfall = useMemo(() => {
-    return enterpriseTotal - MINIMUM_PURCHASE_USD;
-  }, [enterpriseTotal]);
 
   const getProductTableBody = useCallback((productsByTier, setLineItem) =>
     productsByTier.map((product, index) => (
@@ -139,6 +134,7 @@ const Extension = ({ context, sendAlert, refreshObjectProperties }) => {
     ))
   );
 
+  // todo: break up into components
   return (
     <>
       {loading === false && (
@@ -186,16 +182,6 @@ const Extension = ({ context, sendAlert, refreshObjectProperties }) => {
                   ? formatter.format(standardTotal)
                   : formatter.format(enterpriseTotal)}
               </Text>
-              {tier === "standard" && standardShortfall < 0 && (
-                <Text>
-                  Shortfall: {formatter.format(Math.abs(standardShortfall))}
-                </Text>
-              )}
-              {tier === "enterprise" && enterpriseShortfall < 0 && (
-                <Text>
-                  Shortfall: {formatter.format(Math.abs(enterpriseShortfall))}
-                </Text>
-              )}
               {!saving && (
                 <Button
                   onClick={() => {
