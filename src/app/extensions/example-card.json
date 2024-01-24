@@ -7,6 +7,6 @@
     "module": {
       "file": "Example.jsx"
     },
-    "objectTypes": [{ "name": "contacts" }]
+    "objectTypes": [{ "name": "deals" }]
   }
 }
