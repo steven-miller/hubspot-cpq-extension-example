@@ -1,7 +1,7 @@
 {
-  "name": "Get started App",
-  "description": "This is an example private app that shows a custom card on the Contact record tab built with React-based frontend. This card demonstrates a simple handshake with HubSpot's serverless backend.",
-  "uid": "get_started_app",
+  "name": "HubSpot Example CPQ",
+  "description": "This is an example of potential CPQ logic available in HubSpot through UI Extensions.",
+  "uid": "hubspot_exampe_cpq",
   "scopes": [
     "crm.objects.contacts.read",
     "crm.objects.contacts.write",
@@ -16,7 +16,7 @@
     "crm": {
       "cards": [
         {
-          "file": "extensions/example-card.json"
+          "file": "extensions/hubspot-cpq-example.json"
         }
       ]
     }

@@ -2,7 +2,6 @@ const axios = require("axios");
 
 exports.main = async (context = {}) => {
   // const's are set by parameters that were passed in and from our secrets
-  // todo: this is only working locally
   const PRIVATE_APP_TOKEN = process.env["PRIVATE_APP_ACCESS_TOKEN"];
 
   try {

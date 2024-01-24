@@ -1,7 +1,7 @@
 {
-  "name": "hubspot-example-function",
+  "name": "hubspot-example-cpq",
   "version": "0.1.0",
-  "author": "HubSpot",
+  "author": "Steve Miller",
   "license": "MIT",
   "dependencies": {
     "@hubspot/api-client": "^9.1.1",

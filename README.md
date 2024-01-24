@@ -1,6 +1,28 @@
-# HubSpot Getting Started Project Template
+# HubSpot Example CPQ App
 
-This is the Getting Started project for HubSpot developer projects. It contains a private app, a CRM card written in React, and a serverless function that the CRM card is able to interact with. This code is intended to help developers get up and running with developer projects quickly and easily.
+This is an example "Configure, Price, Quote" app for HubSpot UI extensions. HubSpot has the ability to "price" and "quote", but many custom logic "configuration" options are not availabe out of the box.
+
+This app is designed to give a starting ground of ideas that could be customized to your company's CPQ needs.
+
+## Preview
+
+Here it is in action - in this GIF, I:
+
+1. Choose a "bundle" of products from the HubSpot product catalog
+2. Configure a custom quantity for one of the products, above the default quantity for this bundle
+3. Click "add to deal" and observe both the deal amount and line items being updated
+
+![demo-gif](bundle.gif)
+
+## Current features
+
+✅ Able to "bundle" line items and add them onto a deal in bulk
+
+## Potential future features:
+
+- [ ] Automatic discounting based on "tier" and quantity of given products
+- [ ] Creating quotes automatically alongside line items
+- [ ] Inventory management
 
 ## Requirements
 
