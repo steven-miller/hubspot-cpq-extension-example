@@ -21,6 +21,7 @@ Here it is in action - in this GIF, I:
 ## Potential future features:
 
 - [ ] Automatic discounting based on "tier" and quantity of given products
+- [ ] Limits and other business logic, depending on the product
 - [ ] Creating quotes automatically alongside line items
 - [ ] Inventory management
 
@@ -31,6 +32,8 @@ There are a few things that must be set up before you can make use of this getti
 - You must have an active HubSpot account.
 - You must have the [HubSpot CLI](https://www.npmjs.com/package/@hubspot/cli) installed and set up.
 - You must have access to developer projects (developer projects are currently [in public beta under "CRM Development Tools"](https://app.hubspot.com/l/whats-new/betas)).
+
+I recommend following step 1 of this guide, "Set up your local environment", to get configured quickly: https://developers.hubspot.com/docs/platform/ui-extensions-quickstart#set-up-your-local-environment
 
 ## Usage
 

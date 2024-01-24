@@ -13,6 +13,7 @@ import {
   Select,
   LoadingSpinner,
   Text,
+  Heading,
 } from "@hubspot/ui-extensions";
 
 const productItems = (response) => response.data.CRM.product_collection.items;
@@ -45,6 +46,7 @@ const CPQ = ({ context, sendAlert, refreshObjectProperties }) => {
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [tier, setTier] = useState(null);
+  const [portalReady, setPortalReady] = useState();
 
   // "tier" packages
   // todo: move to `useReducer`?
@@ -56,6 +58,8 @@ const CPQ = ({ context, sendAlert, refreshObjectProperties }) => {
 
   const getIsPortalConfigured = async () =>
     await hubspot.serverless("getIsPortalConfigured");
+
+  const setupPortal = async () => await hubspot.serverless("setupPortal");
 
   const addLineItems = ({ products, total }) => {
     return hubspot.serverless("createBundle", {
@@ -73,17 +77,50 @@ const CPQ = ({ context, sendAlert, refreshObjectProperties }) => {
     });
   };
 
+  const handleGetProductsByTier = async () => {
+    const products = await getProductsByTier();
+
+    const standardProducts = getStandardTierProducts(products);
+    const enterpriseProducts = getEnterpriseTierProducts(products);
+
+    setStandardTier(standardProducts);
+    setEnterpriseTier(enterpriseProducts);
+  };
+
   useEffect(async () => {
     setLoading(true);
-    const config = await getIsPortalConfigured();
-    console.log(config);
-    getProductsByTier().then((resp) => {
-      setStandardTier(getStandardTierProducts(resp));
-      setEnterpriseTier(getEnterpriseTierProducts(resp));
-      setLoading(false);
-      // todo: add catch
-    });
+    const isPortalConfigured = await getIsPortalConfigured();
+    setPortalReady(isPortalConfigured);
+
+    if (isPortalConfigured) {
+      await handleGetProductsByTier();
+    }
+
+    setLoading(false);
   }, []); // todo: evaluate deps in hooks
+
+  const handleSetupPortal = async () => {
+    setLoading(true);
+
+    try {
+      await setupPortal();
+      setPortalReady(true);
+      await handleGetProductsByTier();
+      setLoading(false);
+      sendAlert({
+        message: "Portal successfully updated!",
+        type: "success",
+      });
+    } catch {
+      sendAlert({
+        message:
+          "The setup script encountered an error. Please refresh the page and try again.",
+        type: "error",
+      });
+
+      throw e;
+    }
+  };
 
   // todo: probably a clever way to use one "total" rather than split logic everywhere
   const standardTotal = useMemo(() => {
@@ -137,7 +174,18 @@ const CPQ = ({ context, sendAlert, refreshObjectProperties }) => {
   // todo: break up into components
   return (
     <>
-      {loading === false && (
+      {portalReady === false && loading === false && (
+        <>
+          <Heading>Setup</Heading>
+          <Text>
+            Looks like your portal isn't set up for the CPQ example! Click the
+            button below for a one-click setup of product properties and
+            records.
+          </Text>
+          <Button onClick={() => handleSetupPortal()}>Set up now</Button>
+        </>
+      )}
+      {loading === false && portalReady === true && (
         <>
           <Select
             label="Select a package"

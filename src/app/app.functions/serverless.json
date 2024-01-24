@@ -11,6 +11,10 @@
     "getIsPortalConfigured": {
       "file": "getIsPortalConfigured.js",
       "secrets": []
+    },
+    "setupPortal": {
+      "file": "setupPortal.js",
+      "secrets": []
     }
   }
 }

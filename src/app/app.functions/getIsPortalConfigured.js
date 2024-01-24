@@ -6,7 +6,6 @@ exports.main = async () => {
   });
 
   const BatchReadInputPropertyName = {
-    archived: true,
     inputs: [{ name: "default_quantity" }, { name: "tier" }],
   };
   const objectType = "0-7";
@@ -17,9 +16,17 @@ exports.main = async () => {
       BatchReadInputPropertyName
     );
     console.log(JSON.stringify(apiResponse, null, 2));
+
+    if (apiResponse.numErrors && apiResponse.numErrors > 0) {
+      // some properties are missing
+      return false;
+    } else {
+      return true;
+    }
   } catch (e) {
     e.message === "HTTP request failed"
       ? console.error(JSON.stringify(e.response, null, 2))
       : console.error(e);
+    return e;
   }
 };
