@@ -73,6 +73,7 @@ async function createProducts(hubspotClient) {
           price: "5000.00",
           default_quantity: 1,
           tier: "standard",
+          hs_price_usd: "5000.00",
         },
         associations: [],
       },
@@ -82,6 +83,7 @@ async function createProducts(hubspotClient) {
           price: "3000.00",
           default_quantity: 1,
           tier: "standard",
+          hs_price_usd: "3000.00",
         },
       },
       {
@@ -90,6 +92,7 @@ async function createProducts(hubspotClient) {
           price: "10.00",
           default_quantity: 500,
           tier: "standard",
+          hs_price_usd: "10.00",
         },
       },
       {
@@ -98,6 +101,7 @@ async function createProducts(hubspotClient) {
           price: "8000.00",
           default_quantity: 1,
           tier: "enterprise",
+          hs_price_usd: "8000.00",
         },
       },
       {
@@ -106,6 +110,7 @@ async function createProducts(hubspotClient) {
           price: "5000.00",
           default_quantity: 1,
           tier: "enterprise",
+          hs_price_usd: "5000.00",
         },
       },
       {
@@ -114,6 +119,7 @@ async function createProducts(hubspotClient) {
           price: "7.00",
           default_quantity: 1000,
           tier: "enterprise",
+          hs_price_usd: "7.00",
         },
       },
       {
@@ -122,6 +128,7 @@ async function createProducts(hubspotClient) {
           price: "10.00",
           default_quantity: 250,
           tier: "enterprise",
+          hs_price_usd: "10.00",
         },
       },
     ],
